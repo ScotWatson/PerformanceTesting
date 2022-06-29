@@ -30,13 +30,13 @@ function start( [ loadEvt, cryptoModule ] ) {
   }
   const test_promises = [];
   for (let i = 0; i < 10000; ++i) {
-    const plaintext = new ArrayBuffer(64);
-    const key = new ArrayBuffer(32);
-    const iv = new ArrayBuffer(16);
-    getRandomValues(new Uint8Array(plaintext));
-    getRandomValues(new Uint8Array(key));
-    getRandomValues(new Uint8Array(iv));
-    const myPromise = test_encrypt(plaintext, key, iv);
+    const plaintextA = new ArrayBuffer(64);
+    const keyA = new ArrayBuffer(32);
+    const ivA = new ArrayBuffer(16);
+    getRandomValues(new Uint8Array(plaintextA));
+    getRandomValues(new Uint8Array(keyA));
+    getRandomValues(new Uint8Array(ivA));
+    const myPromise = test_encrypt(plaintextA, keyA, ivA);
     myPromise.catch(alert);
     test_promises.push(myPromise);
   }
