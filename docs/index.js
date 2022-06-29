@@ -36,7 +36,9 @@ function start( [ loadEvt, cryptoModule ] ) {
     getRandomValues(new Uint8Array(plaintext));
     getRandomValues(new Uint8Array(key));
     getRandomValues(new Uint8Array(iv));
-    test_promises.push(test_encrypt(plaintext, key, iv));
+    const myPromise = test_encrypt(plaintext, key, iv);
+    myPromise.catch(alert);
+    test_promises.push(myPromise);
   }
   Promise.all(test_promises).then(function (results) {
     let totalTime = 0;
