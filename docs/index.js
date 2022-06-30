@@ -24,7 +24,7 @@ function start( [ loadEvt, cryptoModule ] ) {
     const plaintext2 = await cryptoModule.decrypt_AES256_CBC(ciphertext, key, iv);
     const endTime = Performance.now();
     return {
-      plaintext: plaintext2,
+      plaintextB: plaintext2,
       duration: endTime - startTime,
     };
   }
