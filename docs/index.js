@@ -20,8 +20,16 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 function start( [ loadEvt, cryptoModule ] ) {
   async function test_encrypt(plaintext, key, iv) {
     const startTime = performance.now();
-    const ciphertext = await cryptoModule.encrypt_AES256_CBC(plaintext, key, iv);
-    const plaintext2 = await cryptoModule.decrypt_AES256_CBC(ciphertext, key, iv);
+    const ciphertext = await cryptoModule.encrypt_AES256_CBC( {
+      plaintext,
+      key,
+      iv,
+    } );
+    const plaintext2 = await cryptoModule.decrypt_AES256_CBC( {
+      ciphertext,
+      key,
+      iv,
+    } );
     const endTime = performance.now();
     return {
       plaintext: plaintext2,
