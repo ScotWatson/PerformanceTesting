@@ -5,7 +5,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 const loadCryptoModule = import("https://scotwatson.github.io/WebCrypto/Crypto.mjs");
 
-  /*
 loadCryptoModule.then(function (module) {
   console.log(Object.getOwnPropertyNames(module));
 }, console.error);
@@ -54,4 +53,3 @@ function start( [ loadEvt, cryptoModule ] ) {
 function fail(error) {
   document.body.appendChild(document.createTextNode(error.message));
 }
-  */
