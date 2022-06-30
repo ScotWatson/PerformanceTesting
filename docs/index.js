@@ -29,7 +29,7 @@ function start( [ loadEvt, cryptoModule ] ) {
     };
   }
   const test_promises = [];
-  for (let i = 0; i < 1000; ++i) {
+  for (let i = 0; i < 10; ++i) {
     const plaintext = new ArrayBuffer(64);
     const key = new ArrayBuffer(32);
     const iv = new ArrayBuffer(16);
