@@ -5,6 +5,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 const loadCryptoModule = import("https://scotwatson.github.io/WebCrypto/Crypto.mjs");
 
+  /*
 loadCryptoModule.then(function (module) {
   console.log(Object.getOwnPropertyNames(module));
 }, console.error);
@@ -18,7 +19,6 @@ const loadWindow = new Promise(function (resolve, reject) {
 Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 
 function start( [ loadEvt, cryptoModule ] ) {
-  /*
   async function test_encrypt(plaintext, key, iv) {
     const startTime = Performance.now();
     const ciphertext = await cryptoModule.encrypt_AES256_CBC(plaintext, key, iv);
@@ -48,10 +48,10 @@ function start( [ loadEvt, cryptoModule ] ) {
     }
     console.log("Avg time (ms):", (totalTime / results.length));
   });
-  */
 }
 
 
 function fail(error) {
   document.body.appendChild(document.createTextNode(error.message));
 }
+  */
