@@ -26,6 +26,7 @@ function start( [ loadEvt, cryptoModule ] ) {
       iv,
     } );
     const ciphertext2 = ciphertext.slice(0, 256);
+    console.log(ciphertext2);
     const plaintext2 = await cryptoModule.decrypt_AES256_CBC( {
       ciphertext2,
       key,
