@@ -38,7 +38,7 @@ function start( [ loadEvt, cryptoModule ] ) {
   }
   const test_promises = [];
   for (let i = 0; i < 100; ++i) {
-    const plaintext = new Uint8Array(64);
+    const plaintext = new Uint8Array(256);
     const key = new Uint8Array(32);
     const iv = new Uint8Array(16);
     cryptoModule.getRandomValues(plaintext);
