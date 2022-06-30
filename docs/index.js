@@ -33,9 +33,9 @@ function start( [ loadEvt, cryptoModule ] ) {
     const plaintextA = new ArrayBuffer(64);
     const keyA = new ArrayBuffer(32);
     const ivA = new ArrayBuffer(16);
-    getRandomValues(new Uint8Array(plaintextA));
-    getRandomValues(new Uint8Array(keyA));
-    getRandomValues(new Uint8Array(ivA));
+    cryptoModule.getRandomValues(new Uint8Array(plaintextA));
+    cryptoModule.getRandomValues(new Uint8Array(keyA));
+    cryptoModule.getRandomValues(new Uint8Array(ivA));
     const myPromise = test_encrypt(plaintextA, keyA, ivA);
     myPromise.catch(alert);
     test_promises.push(myPromise);
