@@ -19,24 +19,24 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 
 function start( [ loadEvt, cryptoModule ] ) {
   async function test_encrypt(plaintext, key, iv) {
-    const startTime = Performance.now();
+    const startTime = performance.now();
     const ciphertext = await cryptoModule.encrypt_AES256_CBC(plaintext, key, iv);
     const plaintext2 = await cryptoModule.decrypt_AES256_CBC(ciphertext, key, iv);
-    const endTime = Performance.now();
+    const endTime = performance.now();
     return {
-      plaintextB: plaintext2,
+      plaintext: plaintext2,
       duration: endTime - startTime,
     };
   }
   const test_promises = [];
   for (let i = 0; i < 10000; ++i) {
-    const plaintextA = new ArrayBuffer(64);
-    const keyA = new ArrayBuffer(32);
-    const ivA = new ArrayBuffer(16);
-    cryptoModule.getRandomValues(new Uint8Array(plaintextA));
-    cryptoModule.getRandomValues(new Uint8Array(keyA));
-    cryptoModule.getRandomValues(new Uint8Array(ivA));
-    const myPromise = test_encrypt(plaintextA, keyA, ivA);
+    const plaintext = new ArrayBuffer(64);
+    const key = new ArrayBuffer(32);
+    const iv = new ArrayBuffer(16);
+    cryptoModule.getRandomValues(new Uint8Array(plaintext));
+    cryptoModule.getRandomValues(new Uint8Array(key));
+    cryptoModule.getRandomValues(new Uint8Array(iv));
+    const myPromise = test_encrypt(plaintext, key, iv);
     myPromise.catch(alert);
     test_promises.push(myPromise);
   }
