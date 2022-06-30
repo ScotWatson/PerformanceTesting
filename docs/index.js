@@ -25,8 +25,9 @@ function start( [ loadEvt, cryptoModule ] ) {
       key,
       iv,
     } );
+    const ciphertext2 = ciphertext.slice(0, 256);
     const plaintext2 = await cryptoModule.decrypt_AES256_CBC( {
-      ciphertext,
+      ciphertext2,
       key,
       iv,
     } );
@@ -37,7 +38,7 @@ function start( [ loadEvt, cryptoModule ] ) {
     };
   }
   const test_promises = [];
-  for (let i = 0; i < 100; ++i) {
+  for (let i = 0; i < 10; ++i) {
     const plaintext = new Uint8Array(32768);
     const key = new Uint8Array(32);
     const iv = new Uint8Array(16);
