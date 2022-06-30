@@ -44,7 +44,7 @@ function start( [ loadEvt, cryptoModule ] ) {
     cryptoModule.getRandomValues(plaintext);
     cryptoModule.getRandomValues(key);
     cryptoModule.getRandomValues(iv);
-    const myPromise = test_encrypt(plaintext, key);
+    const myPromise = test_encrypt(plaintext, key, iv);
     myPromise.catch(alert);
     test_promises.push(myPromise);
   }
