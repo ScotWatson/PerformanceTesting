@@ -21,19 +21,22 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 // Make sure no other events are being added to the event loop, as a promise may yield to other events.
 // This includes other promises, setTimeout, setInterval, requestAnimationFrame, and garbage collection
 function test_promise_performance( { create_args, test_promise, report_average, report_stdev } ) {
+  const sample_length = 100;
   const durations = [];
-  async function test_encrypt(size, durations) {
+  async function time_promise(durations) {
     const startTime = performance.now();
     const args = create_args();
     const { ciphertext } = await test_promise( args );
     const endTime = performance.now();
-    durations.shift();
+    if (durations.length >= sample_length) {
+      durations.shift();
+    }
     durations.push(endTime - startTime);
     calc_average(durations);
     calc_stdev(durations);
-    await test_encrypt(size, durations);
+    await time_promise(durations);
   }
-  const myPromise = test_encrypt(100, durations);
+  const myPromise = time_promise(durations);
   function calc_average(array) {
     let total = 0;
     for (const elem of array) {
