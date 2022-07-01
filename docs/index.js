@@ -50,16 +50,14 @@ function test_promise_performance( { create_args, test_promise, report_average, 
     for (const elem of array) {
       total += elem;
     }
-    const result = (total / array.length);
-    report_average(result);
+    return (total / array.length);
   }
   function calc_stdev(array) {
     let total = 0;
     for (const elem of array) {
       total += (elem * elem);
     }
-    const result = Math.sqrt(total) / (array.length - 1);
-    report_stdev(result);
+    return (Math.sqrt(total) / (array.length - 1));
   }
 }
 
@@ -93,13 +91,10 @@ function start( [ loadEvt, cryptoModule ] ) {
         };
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
-      report_average: function (average) {
-        div_of_average.innerHTML = average;
-      },
-      report_stdev: function (stdev) {
-        div_of_stdev.innerHTML = stdev;
-      },
-    } );
+    } ).then(function (result) {
+      div_of_average.innerHTML = result.average;
+      div_of_stdev.innerHTML = result.stdev;
+    });
   }
   setInterval(getSample, 1000);
 }
