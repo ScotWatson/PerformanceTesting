@@ -47,6 +47,7 @@ function test_promise_performance( { create_args, test_promise, report_average, 
     let total = 0;
     for (const elem of array) {
       total += elem;
+      console.log("elem:", elem);
     }
     console.log(total);
     return (total / array.length);
