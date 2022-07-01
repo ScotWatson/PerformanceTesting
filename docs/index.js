@@ -28,11 +28,11 @@ function test_promise_performance( { create_args, test_promise } ) {
     await test_promise( args );
     const endTime = performance.now();
     durations_array.push(endTime - startTime);
-    console.log((endTime - startTime), durations_array);
     return durations_array;
   }
   function calc(durations_array) {
     console.log(durations_array);
+    console.log(durations_array.length);
     return {
       average: calc_average(durations_array),
       stdev: calc_stdev(durations_array),
