@@ -31,14 +31,12 @@ function test_promise_performance( { create_args, test_promise } ) {
     return durations_array;
   }
   function calc(durations_array) {
-    console.log(durations_array);
-    console.log("durations_array.length: ", durations_array.length);
     return {
       average: calc_average(durations_array),
       stdev: calc_stdev(durations_array),
     };
   }
-  let myPromise = time_promise([]]);
+  let myPromise = time_promise([]);
   for (let i = 0; i < (sample_length - 1); ++i) {
     myPromise = myPromise.then(time_promise);
   }
@@ -46,12 +44,9 @@ function test_promise_performance( { create_args, test_promise } ) {
   return myPromise;
   function calc_average(array) {
     let total = 0;
-    console.log("array.length:", array.length);
     for (const elem of array) {
       total += elem;
-      console.log("elem:", elem);
     }
-    console.log(total);
     return (total / array.length);
   }
   function calc_stdev(array) {
