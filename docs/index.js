@@ -48,6 +48,7 @@ function test_promise_performance( { create_args, test_promise, report_average, 
     for (const elem of array) {
       total += elem;
     }
+    console.log(total);
     return (total / array.length);
   }
   function calc_stdev(array) {
@@ -94,7 +95,7 @@ function start( [ loadEvt, cryptoModule ] ) {
       div_of_stdev.innerHTML = result.stdev;
     });
   }
-  setInterval(getSample, 1000);
+  setInterval(getSample, 2000);
 }
 
 function fail(error) {
