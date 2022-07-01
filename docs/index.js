@@ -32,6 +32,7 @@ function test_promise_performance( { create_args, test_promise, report_average, 
   }
   function calc() {
     console.log(durations);
+    console.log("durations.length", durations.length);
     return {
       average: calc_average(durations),
       stdev: calc_stdev(durations),
@@ -45,6 +46,7 @@ function test_promise_performance( { create_args, test_promise, report_average, 
   return myPromise;
   function calc_average(array) {
     let total = 0;
+    console.log("array.length:", array.length);
     for (const elem of array) {
       total += elem;
       console.log("elem:", elem);
