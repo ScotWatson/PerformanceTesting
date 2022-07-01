@@ -44,7 +44,7 @@ function test_promise_performance( { create_args, test_promise, report_average, 
     myPromise = myPromise.then(time_promise(durations));
   }
   myPromise = myPromise.then(calc);
-  return await myPromise;
+  return myPromise;
   function calc_average(array) {
     let total = 0;
     for (const elem of array) {
