@@ -61,6 +61,21 @@ function test_promise_performance( { create_args, test_promise } ) {
 
 function start( [ loadEvt, cryptoModule ] ) {
   const size = 32768;
+  const div_of_size = document.createElement("div");
+  document.body.appendChild(div_of_size);
+  const btn_inc_size = document.createElement("button");
+  btn_inc_size.innerHTML = "Increase Size";
+  btn_inc_size.addEventListener("click", function () {
+    size *= 2;
+  });
+  document.body.appendChild(btn_inc_size);
+  const btn_dec_size = document.createElement("button");
+  btn_dec_size.innerHTML = "Decrease Size";
+  btn_dec_size.addEventListener("click", function () {
+    size /= 2;
+  });
+  document.body.appendChild(btn_dec_size);
+
   const p_of_average = document.createElement("p");
   const lbl_of_average = document.createTextNode("Average: ");
   const div_of_average = document.createElement("div");
