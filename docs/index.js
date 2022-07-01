@@ -45,6 +45,8 @@ function test_promise_performance( { create_args, test_promise } ) {
   myPromise = myPromise.then(calc);
   return myPromise;
   function calc_average(array) {
+    console.log(array);
+    console.log(array.length);
     let total = 0;
     for (const elem of array) {
       total += elem;
