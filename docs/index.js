@@ -28,6 +28,7 @@ function test_promise_performance( { create_args, test_promise } ) {
     await test_promise( args );
     const endTime = performance.now();
     durations_array.push(endTime - startTime);
+    console.log((endTime - startTime), durations_array);
     return durations_array;
   }
   function calc(durations_array) {
@@ -38,7 +39,7 @@ function test_promise_performance( { create_args, test_promise } ) {
     };
   }
   let myPromise = time_promise([]);
-  for (let i = 0; i < (sample_length - 1); ++i) {
+  for (let i = 1; i < sample_length; ++i) {
     myPromise = myPromise.then(time_promise);
   }
   myPromise = myPromise.then(calc);
