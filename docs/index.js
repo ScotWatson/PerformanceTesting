@@ -28,12 +28,10 @@ function test_promise_performance( { create_args, test_promise, report_average, 
     const args = create_args();
     const { ciphertext } = await test_promise( args );
     const endTime = performance.now();
-    if (durations.length >= sample_length) {
-      durations.shift();
-    }
     durations.push(endTime - startTime);
   }
   function calc() {
+    console.log(durations);
     return {
       average: calc_average(durations),
       stdev: calc_stdev(durations),
