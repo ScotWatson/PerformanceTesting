@@ -33,10 +33,12 @@ function test_promise_performance( { create_args, test_promise } ) {
   function calc(durations_array) {
     console.log(durations_array);
     console.log(durations_array.length);
-    return {
+    const retVal = {
       average: calc_average(durations_array),
       stdev: calc_stdev(durations_array),
     };
+    console.log(retVal);
+    return retVal;
   }
   let myPromise = time_promise([]);
   for (let i = 1; i < sample_length; ++i) {
