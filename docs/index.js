@@ -74,6 +74,7 @@ function start( [ loadEvt, cryptoModule ] ) {
   p_of_stdev.appendChild(div_of_stdev);
   document.body.appendChild(p_of_stdev);
   function getSample() {
+    const startTime = performance.now();
     const plaintext = new Uint8Array(size);
     const key = new Uint8Array(32);
     const iv = new Uint8Array(16);
@@ -92,6 +93,8 @@ function start( [ loadEvt, cryptoModule ] ) {
     } ).then(function (result) {
       div_of_average.innerHTML = Math.round(result.average * 100) / 100;
       div_of_stdev.innerHTML = Math.round(result.stdev * 100) / 100;
+      const endTime = performance.now();
+      console.log("Test time:", endTime - startTime);
     });
   }
   setInterval(getSample, 2000);
