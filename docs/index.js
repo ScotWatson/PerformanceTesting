@@ -23,10 +23,10 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 function test_promise_performance( { create_args, test_promise, report_average, report_stdev } ) {
   const sample_length = 100;
   const durations = [];
-  async function time_promise(durations) {
-    const startTime = performance.now();
+  async function time_promise() {
     const args = create_args();
-    const { ciphertext } = await test_promise( args );
+    const startTime = performance.now();
+    await test_promise( args );
     const endTime = performance.now();
     durations.push(endTime - startTime);
   }
@@ -40,7 +40,7 @@ function test_promise_performance( { create_args, test_promise, report_average, 
   }
   let myPromise = Promise.resolve();
   for(let i = 0; i < sample_length; ++i) {
-    myPromise = myPromise.then(time_promise(durations));
+    myPromise = myPromise.then(time_promise());
   }
   myPromise = myPromise.then(calc);
   return myPromise;
