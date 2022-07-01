@@ -50,6 +50,7 @@ function test_promise_performance( { create_args, test_promise } ) {
     let total = 0;
     for (const elem of array) {
       total += elem;
+      console.log(elem, total);
     }
     return (total / array.length);
   }
