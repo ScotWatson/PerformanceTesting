@@ -97,7 +97,7 @@ function start( [ loadEvt, cryptoModule ] ) {
       console.log("Test time:", endTime - startTime);
     });
   }
-  setInterval(getSample, 2000);
+  setInterval(getSample, 500);
 }
 
 function fail(error) {
