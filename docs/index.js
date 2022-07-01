@@ -22,7 +22,6 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 // This includes other promises, setTimeout, setInterval, requestAnimationFrame, and garbage collection
 function test_promise_performance( { create_args, test_promise } ) {
   const sample_length = 100;
-  const durations = [];
   async function time_promise(durations_array) {
     const args = create_args();
     const startTime = performance.now();
@@ -39,8 +38,8 @@ function test_promise_performance( { create_args, test_promise } ) {
       stdev: calc_stdev(durations_array),
     };
   }
-  let myPromise = time_promise(durations);
-  for (let i = 0; i < sample_length; ++i) {
+  let myPromise = time_promise([]]);
+  for (let i = 0; i < (sample_length - 1); ++i) {
     myPromise = myPromise.then(time_promise);
   }
   myPromise = myPromise.then(calc);
@@ -95,8 +94,8 @@ function start( [ loadEvt, cryptoModule ] ) {
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
-      div_of_average.innerHTML = result.average;
-      div_of_stdev.innerHTML = result.stdev;
+      div_of_average.innerHTML = Math.round(result.average, 2);
+      div_of_stdev.innerHTML = Math.round(result.stdev, 2);
     });
   }
   setInterval(getSample, 2000);
