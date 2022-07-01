@@ -32,11 +32,19 @@ function test_promise_performance( { create_args, test_promise, report_average, 
       durations.shift();
     }
     durations.push(endTime - startTime);
-    calc_average(durations);
-    calc_stdev(durations);
-    await time_promise(durations);
   }
-  const myPromise = time_promise(durations);
+  function calc() {
+    return {
+      average: calc_average(durations),
+      stdev: calc_stdev(durations),
+    };
+  }
+  let myPromise = Promise.resolve();
+  for(let i = 0; i < sample_length; ++i) {
+    myPromise = myPromise.then(time_promise(durations));
+  }
+  myPromise = myPromise.then(calc);
+  return await myPromise;
   function calc_average(array) {
     let total = 0;
     for (const elem of array) {
@@ -69,28 +77,31 @@ function start( [ loadEvt, cryptoModule ] ) {
   p_of_stdev.appendChild(lbl_of_stdev);
   p_of_stdev.appendChild(div_of_stdev);
   document.body.appendChild(p_of_stdev);
-  const plaintext = new Uint8Array(size);
-  const key = new Uint8Array(32);
-  const iv = new Uint8Array(16);
-  test_promise_performance( {
-    create_args: function () {
-      cryptoModule.getRandomValues(plaintext);
-      cryptoModule.getRandomValues(key);
-      cryptoModule.getRandomValues(iv);
-      return {
-        plaintext,
-        key,
-        iv,
-      };
-    },
-    test_promise: cryptoModule.encrypt_AES256_CBC,
-    report_average: function (average) {
-      div_of_average.innerHTML = average;
-    },
-    report_stdev: function (stdev) {
-      div_of_stdev.innerHTML = stdev;
-    },
-  } );
+  function getSample() {
+    const plaintext = new Uint8Array(size);
+    const key = new Uint8Array(32);
+    const iv = new Uint8Array(16);
+    test_promise_performance( {
+      create_args: function () {
+        cryptoModule.getRandomValues(plaintext);
+        cryptoModule.getRandomValues(key);
+        cryptoModule.getRandomValues(iv);
+        return {
+          plaintext,
+          key,
+          iv,
+        };
+      },
+      test_promise: cryptoModule.encrypt_AES256_CBC,
+      report_average: function (average) {
+        div_of_average.innerHTML = average;
+      },
+      report_stdev: function (stdev) {
+        div_of_stdev.innerHTML = stdev;
+      },
+    } );
+  }
+  setInterval(getSample, 1000);
 }
 
 function fail(error) {
