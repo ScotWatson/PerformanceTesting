@@ -20,27 +20,28 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 
 // Make sure no other events are being added to the event loop, as a promise may yield to other events.
 // This includes other promises, setTimeout, setInterval, requestAnimationFrame, and garbage collection
-function test_promise_performance( { create_args, test_promise, report_average, report_stdev } ) {
+function test_promise_performance( { create_args, test_promise } ) {
   const sample_length = 100;
   const durations = [];
-  async function time_promise() {
+  async function time_promise(durations_array) {
     const args = create_args();
     const startTime = performance.now();
     await test_promise( args );
     const endTime = performance.now();
-    durations.push(endTime - startTime);
+    durations_array.push(endTime - startTime);
+    return durations_array;
   }
-  function calc() {
-    console.log(durations);
-    console.log("durations.length", durations.length);
+  function calc(durations_array) {
+    console.log(durations_array);
+    console.log("durations_array.length: ", durations_array.length);
     return {
-      average: calc_average(durations),
-      stdev: calc_stdev(durations),
+      average: calc_average(durations_array),
+      stdev: calc_stdev(durations_array),
     };
   }
-  let myPromise = Promise.resolve();
-  for(let i = 0; i < sample_length; ++i) {
-    myPromise = myPromise.then(time_promise());
+  let myPromise = time_promise(durations);
+  for (let i = 0; i < sample_length; ++i) {
+    myPromise = myPromise.then(time_promise);
   }
   myPromise = myPromise.then(calc);
   return myPromise;
