@@ -67,12 +67,14 @@ function start( [ loadEvt, cryptoModule ] ) {
   btn_inc_size.innerHTML = "Increase Size";
   btn_inc_size.addEventListener("click", function () {
     size *= 2;
+    div_of_size.innerHTML = size;
   });
   document.body.appendChild(btn_inc_size);
   const btn_dec_size = document.createElement("button");
   btn_dec_size.innerHTML = "Decrease Size";
   btn_dec_size.addEventListener("click", function () {
     size /= 2;
+    div_of_size.innerHTML = size;
   });
   document.body.appendChild(btn_dec_size);
 
