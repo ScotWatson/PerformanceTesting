@@ -31,13 +31,10 @@ function test_promise_performance( { create_args, test_promise } ) {
     return durations_array;
   }
   function calc(durations_array) {
-    console.log(durations_array);
-    console.log(durations_array.length);
     const retVal = {
       average: calc_average(durations_array),
       stdev: calc_stdev(durations_array),
     };
-    console.log(retVal);
     return retVal;
   }
   let myPromise = time_promise([]);
@@ -47,12 +44,9 @@ function test_promise_performance( { create_args, test_promise } ) {
   myPromise = myPromise.then(calc);
   return myPromise;
   function calc_average(array) {
-    console.log(array);
-    console.log(array.length);
     let total = 0;
     for (const elem of array) {
       total += elem;
-      console.log(elem, total);
     }
     return (total / array.length);
   }
@@ -96,8 +90,8 @@ function start( [ loadEvt, cryptoModule ] ) {
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
-      div_of_average.innerHTML = Math.round(result.average, 2);
-      div_of_stdev.innerHTML = Math.round(result.stdev, 2);
+      div_of_average.innerHTML = Math.round(result.average * 100) / 100;
+      div_of_stdev.innerHTML = Math.round(result.stdev * 100) / 100;
     });
   }
   setInterval(getSample, 2000);
