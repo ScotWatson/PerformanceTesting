@@ -60,7 +60,7 @@ function test_promise_performance( { create_args, test_promise } ) {
 }
 
 function start( [ loadEvt, cryptoModule ] ) {
-  const size = 32768;
+  let size = 32768;
   const div_of_size = document.createElement("div");
   document.body.appendChild(div_of_size);
   const btn_inc_size = document.createElement("button");
