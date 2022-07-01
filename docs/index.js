@@ -97,7 +97,7 @@ function start( [ loadEvt, cryptoModule ] ) {
     const iv = new Uint8Array(16);
     test_promise_performance( {
       create_args: function () {
-        cryptoModule.getRandomValues(plaintext);
+        cryptoModule.getRandomArray(plaintext);
         cryptoModule.getRandomValues(key);
         cryptoModule.getRandomValues(iv);
         return {
