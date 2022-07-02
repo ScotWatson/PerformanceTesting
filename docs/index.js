@@ -49,14 +49,14 @@ function test_promise_performance( { create_args, test_promise } ) {
     for (const elem of array) {
       total += elem;
     }
-    return (total / array.length);
+    return total;
   }
   function calc_stdev(array) {
     let total = 0;
     for (const elem of array) {
       total += (elem * elem);
     }
-    return (Math.sqrt(total) / (array.length - 1));
+    return total;
   }
 }
 
