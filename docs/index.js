@@ -20,8 +20,8 @@ Promise.all( [ loadWindow, loadCryptoModule ] ).then(start, fail);
 
 // Make sure no other events are being added to the event loop, as a promise may yield to other events.
 // This includes other promises, setTimeout, setInterval, requestAnimationFrame, and garbage collection
-function test_promise_performance( { create_args, test_promise } ) {
-  const sample_length = 100;
+function test_promise_performance( { create_args, test_promise, iterations } ) {
+  const sample_length = iterations;
   async function time_promise(durations_array) {
     const args = create_args();
     const startTime = performance.now();
