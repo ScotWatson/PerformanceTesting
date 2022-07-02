@@ -32,8 +32,8 @@ function test_promise_performance( { create_args, test_promise } ) {
   }
   function calc(durations_array) {
     const retVal = {
-      sum_value: calc_average(durations_array),
-      sum_variance: calc_stdev(durations_array),
+      sum_value: calc_sum(durations_array),
+      stdev: calc_stdev(durations_array),
       num_samples: sample_length,
     };
     return retVal;
@@ -44,7 +44,7 @@ function test_promise_performance( { create_args, test_promise } ) {
   }
   myPromise = myPromise.then(calc);
   return myPromise;
-  function calc_average(array) {
+  function calc_sum(array) {
     let total = 0;
     for (const elem of array) {
       total += elem;
@@ -56,14 +56,13 @@ function test_promise_performance( { create_args, test_promise } ) {
     for (const elem of array) {
       total += (elem * elem);
     }
-    return total;
+    return Math.sqrt(total) / (sample_length - 1);
   }
 }
 
 function start( [ loadEvt, cryptoModule ] ) {
   let size = 32768;
   let acc_sum_value = 0;
-  let acc_sum_variance = 0;
   let acc_num_samples = 0;
   const div_of_size = document.createElement("div");
   document.body.appendChild(div_of_size);
@@ -71,7 +70,6 @@ function start( [ loadEvt, cryptoModule ] ) {
   btn_inc_size.innerHTML = "Increase Size";
   btn_inc_size.addEventListener("click", function () {
     acc_sum_value = 0;
-    acc_sum_variance = 0;
     acc_num_samples = 0;
     size *= 2;
     div_of_size.innerHTML = size;
@@ -81,7 +79,6 @@ function start( [ loadEvt, cryptoModule ] ) {
   btn_dec_size.innerHTML = "Decrease Size";
   btn_dec_size.addEventListener("click", function () {
     acc_sum_value = 0;
-    acc_sum_variance = 0;
     acc_num_samples = 0;
     size /= 2;
     div_of_size.innerHTML = size;
@@ -118,13 +115,10 @@ function start( [ loadEvt, cryptoModule ] ) {
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
-      console.log(result);
       acc_num_samples += result.num_samples;
       acc_sum_value += result.sum_value;
       const average = acc_sum_value / acc_num_samples;
-      acc_sum_variance += result.sum_variance;
-      const stdev = Math.sqrt(acc_sum_variance) / (acc_num_samples - 1);
-      console.log(average, stdev, acc_num_samples);
+      const stdev = result.stdev;
       div_of_average.innerHTML = Math.round(average * 100) / 100;
       div_of_stdev.innerHTML = Math.round(stdev * 100) / 100;
       const endTime = performance.now();
