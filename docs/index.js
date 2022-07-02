@@ -130,9 +130,9 @@ function start( [ loadEvt, cryptoModule ] ) {
     } ).then(function () {
       testTime = endTime - startTime;
       console.log("Test time:", testTime);
-      if (testTime < 200) {
+      if (testTime < 100) {
         num_iterations *= 2;
-      } else if (testTime > 450) {
+      } else if (testTime > 250) {
         num_iterations /= 2;
       }
     } );
