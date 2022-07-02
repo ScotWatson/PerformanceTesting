@@ -62,11 +62,17 @@ function test_promise_performance( { create_args, test_promise } ) {
 
 function start( [ loadEvt, cryptoModule ] ) {
   let size = 32768;
+  let acc_average = 0;
+  let acc_stdev = 0;
+  let acc_num_samples = 0;
   const div_of_size = document.createElement("div");
   document.body.appendChild(div_of_size);
   const btn_inc_size = document.createElement("button");
   btn_inc_size.innerHTML = "Increase Size";
   btn_inc_size.addEventListener("click", function () {
+    acc_average = 0;
+    acc_stdev = 0;
+    acc_num_samples = 0;
     size *= 2;
     div_of_size.innerHTML = size;
   });
@@ -74,6 +80,9 @@ function start( [ loadEvt, cryptoModule ] ) {
   const btn_dec_size = document.createElement("button");
   btn_dec_size.innerHTML = "Decrease Size";
   btn_dec_size.addEventListener("click", function () {
+    acc_average = 0;
+    acc_stdev = 0;
+    acc_num_samples = 0;
     size /= 2;
     div_of_size.innerHTML = size;
   });
@@ -91,9 +100,6 @@ function start( [ loadEvt, cryptoModule ] ) {
   p_of_stdev.appendChild(lbl_of_stdev);
   p_of_stdev.appendChild(div_of_stdev);
   document.body.appendChild(p_of_stdev);
-  let acc_average = 0;
-  let acc_stdev = 0;
-  let acc_num_samples = 0;
   function getSample() {
     const startTime = performance.now();
     const plaintext = new Uint8Array(size);
@@ -113,7 +119,11 @@ function start( [ loadEvt, cryptoModule ] ) {
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
       acc_average = ((acc_average * acc_num_samples) + (result.average * result.num_samples)) / (acc_num_samples + result.num_samples);
-      acc_stdev = Math.sqrt(((acc_stdev * (acc_num_samples - 1))^2) + ((result.stdev * (result.num_samples - 1))^2)) / (acc_num_samples + result.num_samples - 1);
+      if (acc_num_samples > 1) {
+        acc_stdev = Math.sqrt(((acc_stdev * (acc_num_samples - 1))^2) + ((result.stdev * (result.num_samples - 1))^2)) / (acc_num_samples + result.num_samples - 1);
+      } else {
+        acc_stdev = result.stdev;
+      }
       acc_num_samples += result.num_samples;
       div_of_average.innerHTML = Math.round(acc_average * 100) / 100;
       div_of_stdev.innerHTML = Math.round(acc_stdev * 100) / 100;
