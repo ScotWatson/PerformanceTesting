@@ -32,8 +32,8 @@ function test_promise_performance( { create_args, test_promise } ) {
   }
   function calc(durations_array) {
     const retVal = {
-      average: calc_average(durations_array),
-      stdev: calc_stdev(durations_array),
+      sum_values: calc_average(durations_array),
+      sum_variance: calc_stdev(durations_array),
       num_samples: sample_length,
     };
     return retVal;
@@ -62,8 +62,8 @@ function test_promise_performance( { create_args, test_promise } ) {
 
 function start( [ loadEvt, cryptoModule ] ) {
   let size = 32768;
-  let acc_average = 0;
-  let acc_stdev = 0;
+  let acc_sum_value = 0;
+  let acc_sum_variance = 0;
   let acc_num_samples = 0;
   const div_of_size = document.createElement("div");
   document.body.appendChild(div_of_size);
@@ -118,15 +118,13 @@ function start( [ loadEvt, cryptoModule ] ) {
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
-      acc_average = ((acc_average * acc_num_samples) + (result.average * result.num_samples)) / (acc_num_samples + result.num_samples);
-      if (acc_num_samples > 1) {
-        acc_stdev = Math.sqrt(((acc_stdev * (acc_num_samples - 1))^2) + ((result.stdev * (result.num_samples - 1))^2)) / (acc_num_samples + result.num_samples - 1);
-      } else {
-        acc_stdev = result.stdev;
-      }
       acc_num_samples += result.num_samples;
-      div_of_average.innerHTML = Math.round(acc_average * 100) / 100;
-      div_of_stdev.innerHTML = Math.round(acc_stdev * 100) / 100;
+      acc_sum_values += result.sum_values;
+      const average = acc_sum_values / acc_num_samples;
+      acc_sum_variance += result.sum_variance;
+      const stdev = Math.sqrt(acc_sum_variance) / (acc_num_samples - 1);
+      div_of_average.innerHTML = Math.round(average * 100) / 100;
+      div_of_stdev.innerHTML = Math.round(stdev * 100) / 100;
       const endTime = performance.now();
       console.log("Test time:", endTime - startTime);
     });
