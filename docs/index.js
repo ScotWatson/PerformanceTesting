@@ -32,7 +32,7 @@ function test_promise_performance( { create_args, test_promise } ) {
   }
   function calc(durations_array) {
     const retVal = {
-      sum_values: calc_average(durations_array),
+      sum_value: calc_average(durations_array),
       sum_variance: calc_stdev(durations_array),
       num_samples: sample_length,
     };
@@ -70,8 +70,8 @@ function start( [ loadEvt, cryptoModule ] ) {
   const btn_inc_size = document.createElement("button");
   btn_inc_size.innerHTML = "Increase Size";
   btn_inc_size.addEventListener("click", function () {
-    acc_average = 0;
-    acc_stdev = 0;
+    acc_sum_value = 0;
+    acc_sum_variance = 0;
     acc_num_samples = 0;
     size *= 2;
     div_of_size.innerHTML = size;
@@ -80,8 +80,8 @@ function start( [ loadEvt, cryptoModule ] ) {
   const btn_dec_size = document.createElement("button");
   btn_dec_size.innerHTML = "Decrease Size";
   btn_dec_size.addEventListener("click", function () {
-    acc_average = 0;
-    acc_stdev = 0;
+    acc_sum_value = 0;
+    acc_sum_variance = 0;
     acc_num_samples = 0;
     size /= 2;
     div_of_size.innerHTML = size;
@@ -119,8 +119,8 @@ function start( [ loadEvt, cryptoModule ] ) {
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
       acc_num_samples += result.num_samples;
-      acc_sum_values += result.sum_values;
-      const average = acc_sum_values / acc_num_samples;
+      acc_sum_value += result.sum_value;
+      const average = acc_sum_value / acc_num_samples;
       acc_sum_variance += result.sum_variance;
       const stdev = Math.sqrt(acc_sum_variance) / (acc_num_samples - 1);
       div_of_average.innerHTML = Math.round(average * 100) / 100;
