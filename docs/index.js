@@ -72,7 +72,9 @@ function start( [ loadEvt, cryptoModule ] ) {
   btn_inc_size.addEventListener("click", function () {
     acc_sum_value = 0;
     acc_num_samples = 0;
+    num_iterations = 1;
     size *= 2;
+    plaintext = new Uint8Array(size);
     div_of_size.innerHTML = size;
   });
   document.body.appendChild(btn_inc_size);
@@ -81,7 +83,9 @@ function start( [ loadEvt, cryptoModule ] ) {
   btn_dec_size.addEventListener("click", function () {
     acc_sum_value = 0;
     acc_num_samples = 0;
+    num_iterations = 1;
     size /= 2;
+    plaintext = new Uint8Array(size);
     div_of_size.innerHTML = size;
   });
   document.body.appendChild(btn_dec_size);
@@ -101,11 +105,11 @@ function start( [ loadEvt, cryptoModule ] ) {
   let startTime;
   let endTime;
   let testTime;
+  let plaintext = new Uint8Array(size);
+  const key = new Uint8Array(32);
+  const iv = new Uint8Array(16);
   function getSample() {
     startTime = performance.now();
-    const plaintext = new Uint8Array(size);
-    const key = new Uint8Array(32);
-    const iv = new Uint8Array(16);
     test_promise_performance( {
       create_args: function () {
         cryptoModule.getRandomArray(plaintext);
