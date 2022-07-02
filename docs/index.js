@@ -118,11 +118,13 @@ function start( [ loadEvt, cryptoModule ] ) {
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
     } ).then(function (result) {
+      console.log(result);
       acc_num_samples += result.num_samples;
       acc_sum_value += result.sum_value;
       const average = acc_sum_value / acc_num_samples;
       acc_sum_variance += result.sum_variance;
       const stdev = Math.sqrt(acc_sum_variance) / (acc_num_samples - 1);
+      console.log(average, stdev, acc_num_samples);
       div_of_average.innerHTML = Math.round(average * 100) / 100;
       div_of_stdev.innerHTML = Math.round(stdev * 100) / 100;
       const endTime = performance.now();
