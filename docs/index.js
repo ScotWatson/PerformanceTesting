@@ -64,6 +64,7 @@ function start( [ loadEvt, cryptoModule ] ) {
   let size = 32768;
   let acc_sum_value = 0;
   let acc_num_samples = 0;
+  let num_iterations = 1;
   const div_of_size = document.createElement("div");
   document.body.appendChild(div_of_size);
   const btn_inc_size = document.createElement("button");
@@ -97,8 +98,11 @@ function start( [ loadEvt, cryptoModule ] ) {
   p_of_stdev.appendChild(lbl_of_stdev);
   p_of_stdev.appendChild(div_of_stdev);
   document.body.appendChild(p_of_stdev);
+  let startTime;
+  let endTime;
+  let testTime;
   function getSample() {
-    const startTime = performance.now();
+    startTime = performance.now();
     const plaintext = new Uint8Array(size);
     const key = new Uint8Array(32);
     const iv = new Uint8Array(16);
@@ -114,6 +118,7 @@ function start( [ loadEvt, cryptoModule ] ) {
         };
       },
       test_promise: cryptoModule.encrypt_AES256_CBC,
+      iterations: num_iterations,
     } ).then(function (result) {
       acc_num_samples += result.num_samples;
       acc_sum_value += result.sum_value;
@@ -121,9 +126,16 @@ function start( [ loadEvt, cryptoModule ] ) {
       const stdev = result.stdev;
       div_of_average.innerHTML = Math.round(average * 100) / 100;
       div_of_stdev.innerHTML = Math.round(stdev * 100) / 100;
-      const endTime = performance.now();
-      console.log("Test time:", endTime - startTime);
-    });
+      endTime = performance.now();
+    } ).then(function () {
+      testTime = endTime - startTime;
+      console.log("Test time:", testTime);
+      if (testTime < 200) {
+        num_iterations *= 2;
+      } else if (testTime > 450) {
+        num_iterations /= 2;
+      }
+    } );
   }
   setInterval(getSample, 500);
 }
