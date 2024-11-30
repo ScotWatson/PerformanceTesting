@@ -46,11 +46,7 @@ self.addEventListener("install", (e) => {
 });
 self.addEventListener("fetch", (e) => {
   async function getResponse(request) {
-    console.log(request);
-    console.log(request.url);
-    console.log(urlSelf);
-    console.log(new URL("./test.js", urlSelf));
-    if (request.url.toString() === new URL("./test.js", urlSelf).toString()) {
+    if (request.url === new URL("./test.js", urlSelf).href) {
       return new Response(testFile, {
         status: 200,
         statusText: "ok",
