@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
     inpFile.type = "file";
     inpFile.addEventListener("change", () => {
       console.log("send message");
-      self.navigator.serviceWorker.postMessage({
+      self.navigator.serviceWorker.controller.postMessage({
         command: "loadTest",
         file: inpFile.files[0],
       }, [ inpFile.files[0] ]);
