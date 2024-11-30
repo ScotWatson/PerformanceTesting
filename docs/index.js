@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
     divHeader.appendChild(btnLoadTest);
   } else {
     (async () => {
-      const registration = await self.navigator.register("./sw.js");
+      const registration = await self.navigator.serviceWorker.register("./sw.js");
       window.location.reload();
     })();
   }
