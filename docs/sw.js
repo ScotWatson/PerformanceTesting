@@ -24,6 +24,9 @@ function cleanRequest(request) {
 }
 
 self.addEventListener("message", (e) => {
+  console.log("sw.js message error");
+});
+self.addEventListener("message", (e) => {
   console.log("message received");
   if (typeof e.data === "object" && e.data !== null) {
     switch (e.data.command) {
