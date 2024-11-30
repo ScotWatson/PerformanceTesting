@@ -50,7 +50,7 @@ self.addEventListener("fetch", (e) => {
     console.log(request.url);
     console.log(urlSelf);
     console.log(new URL("./test.js", urlSelf));
-    if (request.url === new URL("./test.js", urlSelf)) {
+    if (request.url.toString() === new URL("./test.js", urlSelf).toString()) {
       return new Response(testFile, {
         status: 200,
         statusText: "ok",
