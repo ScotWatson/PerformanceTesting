@@ -14,10 +14,11 @@ window.addEventListener("load", () => {
     inpFile.type = "file";
     inpFile.addEventListener("change", () => {
       console.log("send message");
+      const data = inpFile.files[0].arrayBuffer();
       self.navigator.serviceWorker.controller.postMessage({
         command: "loadTest",
-        file: inpFile.files[0],
-      }, [ inpFile.files[0] ]);
+        file: data,
+      }, [ data ]);
     });
     divHeader.appendChild(inpFile);
     const btnLoadTest = document.createElement("button");
