@@ -6,6 +6,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 const urlSelf = new URL("./", self.location);
 let testFile;
 
+function cleanRequest(request) {
+  return new Request(request.url, {
+    body: request.body,
+    cache: request.cache,
+    credentials: request.credentials,
+    headers: request.headers,
+    integrity: request.integrity,
+    keepalive: request.keepalive,
+    method: request.method,
+    mode: (request.mode === "navigate") ? "cors" : request.mode,
+    redirect: request.redirect,
+    referrer: request.referrer,
+    referrerPolicy: request.referrerPolicy,
+    signal: request.signal,
+  });
+}
+
 self.addEventListener("message", (e) => {
   if (typeof e.data === "object" && e.data !== null) {
     switch (e.data.command) {
@@ -34,7 +51,7 @@ self.addEventListener("fetch", (e) => {
         },
       });
   } else if (request.url.startsWith(urlSelf)) {
-      const rawResponse = await fetch(request);
+      const rawResponse = await fetch(cleanRequest(request));
       rawResponse.headers.set("Cross-Origin-Opener-Policy", "same-origin");
       rawResponse.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
       return new Response(rawResponse.body, {
@@ -43,7 +60,7 @@ self.addEventListener("fetch", (e) => {
         headers: rawResponse.headers,
       });
     } else {
-      return await fetch(request);
+      return await fetch(cleanRequest(request));
     }
   }
   e.respondWith(getResponse(e.request));
