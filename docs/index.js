@@ -30,7 +30,7 @@ window.addEventListener("load", () => {
   } else {
     (async () => {
       const registration = await self.navigator.serviceWorker.register("./sw.js");
-      window.location.reload();
+//      window.location.reload();
     })();
   }
 });
