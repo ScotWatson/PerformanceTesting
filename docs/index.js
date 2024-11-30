@@ -20,6 +20,7 @@ window.addEventListener("load", () => {
           command: "loadTest",
           file: data,
         }, [ data ]);
+        console.log("message sent");
       })();
     });
     divHeader.appendChild(inpFile);
