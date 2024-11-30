@@ -34,8 +34,8 @@ self.addEventListener("fetch", (e) => {
       });
   } else if (request.url.startsWith(urlSelf)) {
       const rawResponse = await fetch(request);
-      rawResponse.set("Cross-Origin-Opener-Policy", "same-origin");
-      rawResponse.set("Cross-Origin-Embedder-Policy", "require-corp");
+      rawResponse.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+      rawResponse.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
       return new Response(rawResponse.body, {
         status: rawResponse.status,
         statusText: rawResponse.statusText,
