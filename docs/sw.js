@@ -2,10 +2,11 @@
 (c) 2024 Scot Watson  All Rights Reserved
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 const urlSelf = new URL("./", self.location);
+let testFile;
 
-let testFile = null;
-
+console.log("set message listener");
 self.addEventListener("message", (e) => {
   if (typeof e.data === "object" && e.data !== null) {
     switch (e.data.command) {
@@ -18,7 +19,11 @@ self.addEventListener("message", (e) => {
     }
   }
 });
-self.addEventListener("install", (e) => {});
+console.log("set install listener");
+self.addEventListener("install", (e) => {
+  testFile = null;
+});
+console.log("set activate listener");
 self.addEventListener("fetch", (e) => {
   async function getResponse(request) {
     if (request.url === new URL("./test.js", urlSelf)) {
