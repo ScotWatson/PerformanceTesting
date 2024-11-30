@@ -6,7 +6,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 const urlSelf = new URL("./", self.location);
 let testFile;
 
-console.log("set message listener");
 self.addEventListener("message", (e) => {
   if (typeof e.data === "object" && e.data !== null) {
     switch (e.data.command) {
@@ -19,11 +18,9 @@ self.addEventListener("message", (e) => {
     }
   }
 });
-console.log("set install listener");
 self.addEventListener("install", (e) => {
   testFile = null;
 });
-console.log("set activate listener");
 self.addEventListener("fetch", (e) => {
   async function getResponse(request) {
     if (request.url === new URL("./test.js", urlSelf)) {
@@ -31,8 +28,8 @@ self.addEventListener("fetch", (e) => {
         status: 200,
         statusText: "ok",
         headers: {
-          [ "Cross-Origin-Opener-Policy", "same-origin" ],
-          [ "Cross-Origin-Embedder-Policy", "require-corp" ],
+          "Cross-Origin-Opener-Policy": "same-origin",
+          "Cross-Origin-Embedder-Policy": "require-corp",
         },
       });
   } else if (request.url.startsWith(urlSelf)) {
