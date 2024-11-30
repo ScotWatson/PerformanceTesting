@@ -23,7 +23,7 @@ function cleanRequest(request) {
   });
 }
 
-self.addEventListener("message", (e) => {
+self.addEventListener("messageerror", (e) => {
   console.log("sw.js message error");
 });
 self.addEventListener("message", (e) => {
