@@ -13,6 +13,7 @@ window.addEventListener("load", () => {
     const inpFile = document.createElement("input");
     inpFile.type = "file";
     inpFile.addEventListener("change", () => {
+      console.log("send message");
       self.navigator.serviceWorker.postMessage({
         command: "loadTest",
         file: inpFile.files[0],
@@ -30,7 +31,7 @@ window.addEventListener("load", () => {
   } else {
     (async () => {
       const registration = await self.navigator.serviceWorker.register("./sw.js");
-//      window.location.reload();
+      window.location.reload();
     })();
   }
 });
