@@ -24,10 +24,13 @@ function cleanRequest(request) {
 }
 
 self.addEventListener("message", (e) => {
+  console.log("message received");
   if (typeof e.data === "object" && e.data !== null) {
     switch (e.data.command) {
       case "loadTest": {
         testFile = e.data.file;
+        console.log("test file loaded");
+        break;
       }
       default: {
         // do nothing
