@@ -52,12 +52,13 @@ self.addEventListener("fetch", (e) => {
       });
   } else if (request.url.startsWith(urlSelf)) {
       const rawResponse = await fetch(cleanRequest(request));
-      rawResponse.headers.set("Cross-Origin-Opener-Policy", "same-origin");
-      rawResponse.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
+      const newHeaders = new Headers(rawResponse.headers)
+      newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
+      newHeaders.set("Cross-Origin-Embedder-Policy", "require-corp");
       return new Response(rawResponse.body, {
         status: rawResponse.status,
         statusText: rawResponse.statusText,
-        headers: rawResponse.headers,
+        headers: newHeaders,
       });
     } else {
       return await fetch(cleanRequest(request));
